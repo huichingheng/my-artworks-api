@@ -1,0 +1,21 @@
+{
+  "name": "week-7-project",
+  "version": "1.0.0",
+  "description": "project2",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "project2"
+  },
+  "author": "huiching",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jest": "^23.4.1",
+    "supertest": "^3.1.0"
+  }
+}
