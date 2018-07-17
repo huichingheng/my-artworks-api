@@ -1,0 +1,33 @@
+## express
+* change const to let if neccessary *
+
+## jest test express
+- npm run test:watch to start jest test.
+- await & async.
+- look at https://jestjs.io/docs/en/expect to find more function to expect.
+- use 'send' when do the when need to put in some data, for example, POST and PUT.
+
+###middleware
+- 
+
+
+
+## mongodb
+start mongodb in iterm in a new tab
+If you have installed mongodb through homebrew then you can simply start mongodb through
+- brew services start mongodb
+
+Then access the shell by
+- mongo
+
+-------- extra info ---------
+You can shut down your db by
+- brew services stop mongodb
+
+You can restart your db by
+- brew services restart mongodb
+
+For more options
+- brew info mongodb
+
+-------- extra info ---------
