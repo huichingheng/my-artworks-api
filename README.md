@@ -60,11 +60,25 @@ For more options
     - the copy in the data 
 - can refer to the gitBook: `https://github.com/seanemmer/mongoose-seed`
 
-## IS TIME FOR AUTHENTICATION
-- refer to the gitBook: `https://thoughtworks-jumpstart.gitbook.io/jumpstart/back-end-web-development/token-based-authentication` for step by step.
-- put in the ` ` as middleware for those field i want to protect. 
-
 ## ERROR MIDDLEWARE
+- copy the `./middleware/error_handlers.js into my project.`
+- @ app.js, import `const { handle404, handle500 } = require('./middleware/error_handlers.js')` and add `app.use(handle404, handle500)` below.
+
+## IS TIME FOR AUTHENTICATION
+- install passport, passport-jwt, jsonwebtoken
+- create directory config/passport.js
+- refer to the gitBook: `https://thoughtworks-jumpstart.gitbook.io/jumpstart/back-end-web-development/token-based-authentication` for step by step.
+- put in the `passport.authenticate("jwt", { session: false })` as middleware for those field i want to protect. 
+- for more information, search passport-jwt here: `http://www.passportjs.org/packages/`.
+- @ app.js, 
+   ----> app.use(
+  "/secret",
+  passport.authenticate("jwt", { session: false }),
+  secretsRouter <----
+    change the secretsRouter to my router.
+- npm install `mongoose-unique-validator`
+
+
 
 ## TEST THE AUTHENTICATION
 

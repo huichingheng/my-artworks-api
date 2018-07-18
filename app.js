@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const index = require("./routers/index");
 const artworksRouter = require("./routers/artworks");
+const { passport } = require("./config/passport");
 
 const { handle404, handle500 } = require('./middleware/error_handlers.js');
 
@@ -19,8 +20,15 @@ db.on("error", error => {
 });
 
 app.use(express.json());
+app.use(passport.initialize());
 
 app.use("/", index);
+app.use(
+  "/secret",
+  passport.authenticate("jwt", { session: false }),
+  artworksRouter
+);
+
 app.use(handle404, handle500)
 
 // app.use("/artworks", artworksRouter);
