@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/jumpstart");
 
 const artistSchema = mongoose.Schema({
   name: String,

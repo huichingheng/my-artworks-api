@@ -1,26 +1,29 @@
 const express = require("express");
-const router = express.Router();
+const artworksRouter = express.Router();
 const mongoose = require("mongoose");
-// let artworks = require("../seedData");
 const Artwork = require("../models/artwork");
 
-// router.use(express.json());
+artworksRouter.use(express.json());
 
-router.get("/", (req, res) => {
-  res.json(artworks);
-});
+artworksRouter.get("/", async (req, res, next) => {
+  const artworks = await Artwork.find();
+  // console.log("SAIDHASIFGHAIFHAIGA", req.query)
 
-router.get("/:id", (req, res) => {
-  let artwork = artworks.find(artwork => artwork.id === req.params.id);
-  const err = new Error("simluated error");
-  if (artwork) {
-    res.json(artwork);
+  const queryKeys = Object.keys(req.query)
+  
+  if (queryKeys.length > 0) {
+    const requestedArtist = req.query.artist;
+    
+    const filteredArtworks = artworks.filter(artwork => {
+      return artwork.artist.includes(requestedArtist);
+    });
+    res.json(filteredArtworks);
   } else {
-    next();
+    res.json(artworks);
   }
 });
 
-router.post("/", async (req, res, next) => {
+artworksRouter.post("/", async (req, res, next) => {
   const newArtwork = new Artwork({
     artwork: req.body.artwork,
     artist: req.body.artist,
@@ -38,29 +41,15 @@ router.post("/", async (req, res, next) => {
   res.status(201).json();
 });
 
-// router.post("/", (req, res) => {
-//   const addArtworks = [...artworks, req.body];
-//   res.json(addArtworks);
-// });
+artworksRouter.put("/:id", async (req, res, next)=>{
+  const artwork = await Artwork.findByIdAndUpdate(req.params.id,req.body)
+  res.status(204).json()
+})
 
-router.put("/:id", (req, res) => {
-  let newArtworksList = artworks.map(artwork => {
-    if (artwork.id === req.params.id) {
-      return { ...artwork, ...req.body };
-    } else return artwork;
-  });
-  artworks = newArtworksList;
-  // console.log(newArtworksList);
-  res.json(
-    artworks.find(artwork => {
-      return artwork.id === req.params.id;
-    })
-  );
+
+artworksRouter.delete("/:id", async (req, res, next) => {
+  const artwork = await Artwork.findByIdAndDelete(req.params.id);
+  res.status(204).json(`the artwork id-${req.params.id} is removed`);
 });
 
-router.delete("/:id", (req, res) => {
-  artworks = artworks.filter(artwork => artwork.id !== req.params.id);
-  res.json(`the artwork id-${req.params.id} is removed`);
-});
-
-module.exports = router;
+module.exports = (app)=>{app.use("/artworks", artworksRouter)};
