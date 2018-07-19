@@ -28,7 +28,7 @@ UserSchema.methods.setHashedPassword = function(password) {
 };
 
 // use ES5 function to prevent `this` from becoming undefined
-UserSchema.methods.validPassword = function(password) {
+UserSchema.methods.validatePassword = function(password) {
   return this.hash === hashPassword(password, this.salt);
 };
 

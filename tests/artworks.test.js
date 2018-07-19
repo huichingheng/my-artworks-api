@@ -11,7 +11,27 @@ const dummyApp = express();
 
 artworksRouter(dummyApp);
 
+let adminBearerjwtToken;
 let saveArtwork1;
+
+const signUp = async () => {
+  let signUpResponse = await request(dummyApp)
+    .post("/artworks/signup")
+    .send({
+      username: "admin",
+      password: "12345678"
+    });
+};
+
+const signIn = async () => {
+  let signInResponse = await request(dummyApp)
+    .post("/artworks/signin")
+    .send({
+      username: "admin",
+      password: "12345678"
+    });
+  adminBearerjwtToken = "bearer " + signInResponse.body.token;
+};
 
 async function addFakeArtworks() {
   const artwork1 = new Artwork({
@@ -35,6 +55,8 @@ beforeAll(async () => {
   const uri = await mongod.getConnectionString();
   await mongoose.connect(uri);
   await addFakeArtworks();
+  await signUp();
+  await signIn();
 });
 
 afterAll(() => {
@@ -66,7 +88,8 @@ test("POST / should return the length of the artworks after create the new artwo
 
   const response = await request(dummyApp)
     .post("/artworks")
-    .send(newArtwork);
+    .send(newArtwork)
+    .set("Authorization", adminBearerjwtToken);
   expect(response.status).toBe(201);
   const artworks = await Artwork.find();
   expect(artworks.length).toEqual(2);
@@ -78,16 +101,17 @@ test("PUT /:id should return the updated artwork", async () => {
   };
   const response = await request(dummyApp)
     .put("/artworks/" + saveArtwork1._id)
-    .send(updateArtwork);
+    .send(updateArtwork)
+    .set("Authorization", adminBearerjwtToken);
   const updatedArtwork = await Artwork.findById(saveArtwork1._id);
   expect(response.status).toBe(204);
   expect(updatedArtwork.price).toEqual(updateArtwork.price);
 });
 
 test("DEL / should return the deleted artwork id", async () => {
-  const response = await request(dummyApp).delete(
-    "/artworks/" + saveArtwork1._id
-  );
+  const response = await request(dummyApp)
+    .delete("/artworks/" + saveArtwork1._id)
+    .set("Authorization", adminBearerjwtToken);
   const delArtwork = await Artwork.findById(saveArtwork1._id);
 
   expect(response.status).toBe(204);

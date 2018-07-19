@@ -1,5 +1,8 @@
 const express = require("express");
-const router = express.Router();
+const artistsRouter = express.Router();
+const mongoose = require("mongoose");
+
+
 
 router.use(express.json())
 

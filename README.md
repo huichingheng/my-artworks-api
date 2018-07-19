@@ -53,6 +53,7 @@ For more options
 
  ## TO PUT SEED DATA INTO THE MONGO db
  - refer to the file: seederDataArtworks.js
+ - npm install --save-dev mongoose-seed
  - change the
     - localhost detail
     - the model files
@@ -65,7 +66,7 @@ For more options
 - @ app.js, import `const { handle404, handle500 } = require('./middleware/error_handlers.js')` and add `app.use(handle404, handle500)` below.
 
 ## IS TIME FOR AUTHENTICATION
-- install passport, passport-jwt, jsonwebtoken
+- npm install passport, passport-jwt, jsonwebtoken, mongoose-unique-validator
 - create directory config/passport.js
 - refer to the gitBook: `https://thoughtworks-jumpstart.gitbook.io/jumpstart/back-end-web-development/token-based-authentication` for step by step.
 - put in the `passport.authenticate("jwt", { session: false })` as middleware for those field i want to protect. 
@@ -76,17 +77,81 @@ For more options
   passport.authenticate("jwt", { session: false }),
   secretsRouter <----
     change the secretsRouter to my router.
-- npm install `mongoose-unique-validator`
+- @ other routers,
+---------------------- do this if i wanna protect the whole router ----------------------
+const unprotectedRoutes = express.Router();
+const protectedRoutes = express.Router();
+
+// EXAMPLE
+
+unprotectedRoutes.get('/', ......)
+
+protectedRoutes.put('/', .......)
+protectedRoutes.delete('/', .......)
+
+....
+
+module.exports = app => {
+    app.use(express.json());
+    app.use("/artwork", unprotectedRoutes);
+    app.use("/artwork", passport.authenticate("jwt", { session: false }), protectedRoutes);
+};
+---------------------- do this if i wanna protect the whole router ----------------------
+## OR ##
+--- put this in the middleware of the individual router if i wanna protect the particular router ---
+
+passport.authenticate("jwt", { session: false })
+
+--- put this in the middleware of the individual router if i wanna protect the particular router ---
 
 
+------------- info -------------
+GET /artist
+    /artwork
+    /id
+
+POST / only user/artist can post
+
+PUT / only artist can put
+
+DELETE / only artist can delete
+
+artist === user , user === artist || user !== artist
+
+------------- info -------------
 
 ## TEST THE AUTHENTICATION
+- @ router.test.js, let adminBearerjwtToken
+- then create the signUp and signIn, change the path ("/path/signup) accordingly
+const signUp = async () => {
+  let signUpResponse = await request(dummyApp)
+    .post("/artworks/signup")
+    .send({
+      username: "admin",
+      password: "12345678"
+    });
+};
+
+const signIn = async () => {
+  let signInResponse = await request(dummyApp)
+    .post("/artworks/signin")
+    .send({
+      username: "admin",
+      password: "12345678"
+    });
+  adminBearerjwtToken = "bearer " + signInResponse.body.token;
+};
+- after that, await signUp() and singIn() in the beforeAll.
+- now the put `.set("Authorization", adminBearerjwtToken)` to the test which need the authorization.
 
 ## IF NEED TO ADD IN OTHER ROUTER
 
 ## SWAGGER - DOCUMATATION
 
 
+## ????
+2. if i wanna be able to find by artist and artwork. i should do it seperately? 
 
+3. how to do it my user can be !== artist but the artist === user?
 
 

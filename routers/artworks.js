@@ -2,8 +2,10 @@ const express = require("express");
 const artworksRouter = express.Router();
 const mongoose = require("mongoose");
 const Artwork = require("../models/artwork");
+const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const { jwtOptions } = require("../config/passport");
+const User = require("../models/user");
 
 artworksRouter.use(express.json());
 
@@ -23,6 +25,10 @@ artworksRouter.get("/", async (req, res, next) => {
   } else {
     res.json(artworks);
   }
+});
+
+artworksRouter.get("/:id", async (req, res, next) => {
+  res.json(await Artwork.findById(req.params.id));
 });
 
 artworksRouter.post("/signup", async (req, res, next) => {
@@ -55,33 +61,45 @@ artworksRouter.post("/signin", async (req, res) => {
   }
 });
 
-artworksRouter.post("/", async (req, res, next) => {
-  const newArtwork = new Artwork({
-    artwork: req.body.artwork,
-    artist: req.body.artist,
-    type: req.body.type,
-    subject: req.body.subject,
-    surface: req.body.surface,
-    size: req.body.size,
-    description: req.body.description,
-    price: req.body.price,
-    image_url: req.body.image_url
-  });
+artworksRouter.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const newArtwork = new Artwork({
+      artwork: req.body.artwork,
+      artist: req.body.artist,
+      type: req.body.type,
+      subject: req.body.subject,
+      surface: req.body.surface,
+      size: req.body.size,
+      description: req.body.description,
+      price: req.body.price,
+      image_url: req.body.image_url
+    });
 
-  const result = await newArtwork.save();
-  // console.log(result);
-  res.status(201).json();
-});
+    const result = await newArtwork.save();
+    // console.log(result);
+    res.status(201).json();
+  }
+);
 
-artworksRouter.put("/:id", async (req, res, next) => {
-  const artwork = await Artwork.findByIdAndUpdate(req.params.id, req.body);
-  res.status(204).json();
-});
+artworksRouter.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const artwork = await Artwork.findByIdAndUpdate(req.params.id, req.body);
+    res.status(204).json();
+  }
+);
 
-artworksRouter.delete("/:id", async (req, res, next) => {
-  const artwork = await Artwork.findByIdAndDelete(req.params.id);
-  res.status(204).json(`the artwork id-${req.params.id} is removed`);
-});
+artworksRouter.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    const artwork = await Artwork.findByIdAndDelete(req.params.id);
+    res.status(204).json(`the artwork id-${req.params.id} is removed`);
+  }
+);
 
 module.exports = app => {
   app.use("/artworks", artworksRouter);

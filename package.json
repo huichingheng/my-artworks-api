@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "mongodb-memory-server": "^1.9.0",
+    "mongoose-seed": "^0.5.0",
     "swagger-ui-express": "^3.0.10"
   }
 }

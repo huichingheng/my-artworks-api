@@ -22,7 +22,6 @@ var data = [
     model: "Artwork",
     documents: [
       {
-        id: "1",
         artwork: "orange container of nagpur",
         artist: "bijay biswaal",
         type: "watercolor",
@@ -35,7 +34,6 @@ var data = [
           "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/orange_container_of_nagpur.jpg"
       },
       {
-        id: "2",
         artwork: "veg restaurant at paharganj side",
         artist: "bijay biswaal",
         type: "watercolor",
@@ -48,7 +46,6 @@ var data = [
           "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/veg_restaurant_at_paharganj_side_0.jpg"
       },
       {
-        id: "3",
         artwork: "the boy",
         artist: "dr.uday bhan",
         type: "watercolor",
@@ -61,7 +58,6 @@ var data = [
           "https://www.artzolo.com/sites/default/files/uploads/multi/917/largest/the_boy_56x38_cm.jpg"
       },
       {
-        id: "4",
         artwork: "ud jayega hans akela",
         artist: "abhishek acharya",
         type: "oil",
@@ -74,7 +70,6 @@ var data = [
           "https://www.artzolo.com/sites/default/files/uploads/multi/7293/largest/ud_jayega_hans_akela.jpg"
       },
       {
-        id: "5",
         artwork: "banaras ganga ghat 15",
         artist: "ganesh hire",
         type: "watercolor",
