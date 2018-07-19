@@ -151,7 +151,7 @@ const signIn = async () => {
 ## IF NEED TO ADD IN OTHER ROUTER
 
 ## SWAGGER - DOCUMATATION
-- npm install -g swagger
+- npm install -g swagger-express
 
 
 ## ????
