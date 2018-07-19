@@ -153,6 +153,9 @@ const signIn = async () => {
 ## SWAGGER - DOCUMATATION
 - npm install -g swagger-express
 
+## Deploy
+"seed": "node seederDataArtworks.js"
+
 
 ## ????
 2. if i wanna be able to find by artist and artwork. i should do it seperately? 

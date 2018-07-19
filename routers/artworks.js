@@ -16,9 +16,10 @@ artworksRouter.get("/", async (req, res, next) => {
   const queryKeys = Object.keys(req.query);
 
   if (queryKeys.length > 0) {
-    const requestedArtist = req.query.artist;
+    const requestedArtist = req.query.artist.toLowerCase();
 
     const filteredArtworks = artworks.filter(artwork => {
+      const lowerCasedArtist = artwork.artist.toLowerCase()
       return artwork.artist.includes(requestedArtist);
     });
     res.json(filteredArtworks);
