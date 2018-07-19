@@ -1,2 +1,4 @@
 node_modules
-app.test
+MyNotes.md
+seedData.json
+seederDataArtworks.js

@@ -11,7 +11,6 @@ artworksRouter.use(express.json());
 
 artworksRouter.get("/", async (req, res, next) => {
   const artworks = await Artwork.find();
-  // console.log("SAIDHASIFGHAIFHAIGA", req.query)
 
   const queryKeys = Object.keys(req.query);
 
@@ -19,7 +18,7 @@ artworksRouter.get("/", async (req, res, next) => {
     const requestedArtist = req.query.artist.toLowerCase();
 
     const filteredArtworks = artworks.filter(artwork => {
-      const lowerCasedArtist = artwork.artist.toLowerCase()
+      const lowerCasedArtist = artwork.artist.toLowerCase();
       return artwork.artist.includes(requestedArtist);
     });
     res.json(filteredArtworks);

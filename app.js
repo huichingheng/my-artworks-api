@@ -4,8 +4,8 @@ const app = express();
 const index = require("./routers/index");
 const artworksRouter = require("./routers/artworks");
 const { passport } = require("./config/passport");
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swaggerDocumentation.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swaggerDocumentation.json");
 
 const { handle404, handle500 } = require("./middleware/error_handlers.js");
 
@@ -25,17 +25,15 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use("/", index);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(
   "/secret",
   passport.authenticate("jwt", { session: false }),
   artworksRouter
 );
 
-// app.use("/artworks", artworksRouter);
 artworksRouter(app);
 
 app.use(handle404, handle500);
-
 
 module.exports = app;

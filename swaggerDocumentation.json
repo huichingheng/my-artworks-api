@@ -1,95 +1,147 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Artworks"
-    },
-    "servers": [
-      {
-        "url": "https://blooming-cliffs-86757.herokuapp.com/"
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Artworks"
+  },
+  "servers": [
+    {
+      "url": "https://blooming-cliffs-86757.herokuapp.com/"
+    }
+  ],
+  "paths": {
+    "/artworks": {
+      "get": {
+        "summary": "List all artworks or the artwork which created by the particular artist",
+        "tags": [
+          "artworks"
+        ],
+        "parameters": [
+          {
+            "name": "artist",
+            "in": "query",
+            "required": false,
+            "description": "Filters artwork that is created by the supplied query artist name.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of the artist's artwork",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "example": {
+                      "artwork": "orange container of nagpur",
+                      "artist": "bijay biswaal",
+                      "type": "watercolor",
+                      "subject": "cityscape",
+                      "surface": "paper",
+                      "size": "14x22 inch",
+                      "description": "painted by bijay biswaal",
+                      "price": "583.33",
+                      "image_url": "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/orange_container_of_nagpur.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new artwork",
+        "tags": [
+          "artworks"
+        ],
+        "requestBody": {
+          "description": "the required fields for creating the artwork",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "example": {
+                  "artwork": "artwork name",
+                  "artist": "artist name",
+                  "size": "the dimension of the artwork in inch",
+                  "price": "the price of the artwork"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Expected the new artwork is contained the required field",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "example": {
+                      "artwork": "orange container of nagpur",
+                      "artist": "bijay biswaal",
+                      "size": "14x22 inch",
+                      "price": "583.33"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
-    ],
-    "paths": {
-      "/artworks": {
-        "get": {
-          "summary": "List all artworks or the artwork which created by the particular artist",
-          "tags": [
-            "artworks"
-          ],
-          "parameters": [
-            {
-              "name": "artist",
-              "in": "query",
-              "required": false,
-              "description": "Filters artwork that is created by the supplied query artist name.",
-              "schema": {
-                "type": "string"
-              }
+    },
+    "/artworks/id": {
+      "put": {
+        "summary": "Updated fields for specific artwork",
+        "tags": [
+          "artworks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The artwork id which to be updated",
+            "schema": {
+              "type": "string"
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "An array of the artist's artwork",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "items": {
-                      "example": {
-                        "artwork": "orange container of nagpur",
-                        "artist": "bijay biswaal",
-                        "type": "watercolor",
-                        "subject": "cityscape",
-                        "surface": "paper",
-                        "size": "14x22 inch",
-                        "description": "painted by bijay biswaal",
-                        "price": "583.33",
-                        "image_url": "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/orange_container_of_nagpur.jpg"
-                      }
-                    }
-                  }
+          }
+        ],
+        "requestBody": {
+          "description": "the fields for artwork which to be updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "price": 2000
                 }
               }
             }
           }
         },
-        "post": {
-          "summary": "Create a new artwork",
-          "tags": [
-            "artworks"
-          ],
-          "requestBody": {
-            "description": "Updated fields for resource",
-            "required": true,
+        "responses": {
+          "204": {
+            "description": "Expected the artwork id valid",
             "content": {
               "application/json": {
                 "schema": {
                   "example": {
-                    "id": 2,
-                    "name": "something"
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "create the new artwork",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "items": {
-                      "example": {
-                        "artwork": "orange container of nagpur",
-                        "artist": "bijay biswaal",
-                        "type": "watercolor",
-                        "subject": "cityscape",
-                        "surface": "paper",
-                        "size": "14x22 inch",
-                        "description": "painted by bijay biswaal",
-                        "price": "583.33",
-                        "image_url": "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/orange_container_of_nagpur.jpg"
-                      }
-                    }
+                    "id": "5b4ff61a0550226fb25a8653",
+                    "artwork": "banaras ganga ghat 15",
+                    "artist": "ganesh hire",
+                    "type": "watercolor",
+                    "subject": "nature",
+                    "surface": "paper",
+                    "size": "22x45 inch",
+                    "description": "",
+                    "amount": 2000,
+                    "image_url": "https://www.artzolo.com/sites/default/files/uploads/multi/4964/largest/22x45_d.jpg"
                   }
                 }
               }
@@ -97,109 +149,29 @@
           }
         }
       },
-      "/artworks/{}": {
-        "get": {
-          "summary": "Info for a childcares center_code",
-          "tags": [
-            "childcares"
-          ],
-          "parameters": [
-            {
-              "name": "center_code",
-              "in": "path",
-              "required": true,
-              "description": "The center_code of the childcares",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "Expected the childcare to a valid center_code",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "example": {
-                      "centre_code": "EB0014",
-                      "centre_name": "E-BRIDGE PRE-SCHOOL PTE LTD",
-                      "incidental_charges": "DEPOSIT",
-                      "frequency": "Ad-hoc",
-                      "amount": "1593.75"
-                    }
-                  }
-                }
-              }
+      "delete": {
+        "summary": "Update a specific artwork detail",
+        "tags": [
+          "artworks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The artwork of the id to be removed",
+            "schema": {
+              "type": "string"
             }
           }
-        },
-        "put": {
-          "summary": "Update a specific artwork detail",
-          "tags": [
-            "artworks"
-          ],
-          "parameters": [
-            {
-              "name": "center_code",
-              "in": "path",
-              "required": true,
-              "description": "The id of the childcare to update",
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "description": "Updated fields for childcare",
-            "required": true,
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected the artwork id is valid",
             "content": {
               "application/json": {
                 "schema": {
-                  "example": {
-                    "center_code": "EB0001",
-                    "center_name": "E-BRIDGE PRE-SCHOOL PTE. LTD."
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Expected response to a valid request",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "example": {
-                      "center_code": "EB0001",
-                      "center_name": "updated name"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/resource2": {
-        "get": {
-          "summary": "List all resource2",
-          "tags": [
-            "resource2"
-          ],
-          "responses": {
-            "200": {
-              "description": "List of resource objects",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "example": {
-                        "id": 6,
-                        "special": "a different kind of resource"
-                      }
-                    }
-                  }
+                  "example": {}
                 }
               }
             }
@@ -208,3 +180,4 @@
       }
     }
   }
+}
