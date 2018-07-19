@@ -1,0 +1,210 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Artworks"
+    },
+    "servers": [
+      {
+        "url": "https://blooming-cliffs-86757.herokuapp.com/"
+      }
+    ],
+    "paths": {
+      "/artworks": {
+        "get": {
+          "summary": "List all artworks or the artwork which created by the particular artist",
+          "tags": [
+            "artworks"
+          ],
+          "parameters": [
+            {
+              "name": "artist",
+              "in": "query",
+              "required": false,
+              "description": "Filters artwork that is created by the supplied query artist name.",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "An array of the artist's artwork",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "items": {
+                      "example": {
+                        "artwork": "orange container of nagpur",
+                        "artist": "bijay biswaal",
+                        "type": "watercolor",
+                        "subject": "cityscape",
+                        "surface": "paper",
+                        "size": "14x22 inch",
+                        "description": "painted by bijay biswaal",
+                        "price": "583.33",
+                        "image_url": "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/orange_container_of_nagpur.jpg"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new artwork",
+          "tags": [
+            "artworks"
+          ],
+          "requestBody": {
+            "description": "Updated fields for resource",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 2,
+                    "name": "something"
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "create the new artwork",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "items": {
+                      "example": {
+                        "artwork": "orange container of nagpur",
+                        "artist": "bijay biswaal",
+                        "type": "watercolor",
+                        "subject": "cityscape",
+                        "surface": "paper",
+                        "size": "14x22 inch",
+                        "description": "painted by bijay biswaal",
+                        "price": "583.33",
+                        "image_url": "https://www.artzolo.com/sites/default/files/uploads/multi/101/largest/orange_container_of_nagpur.jpg"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/artworks/{}": {
+        "get": {
+          "summary": "Info for a childcares center_code",
+          "tags": [
+            "childcares"
+          ],
+          "parameters": [
+            {
+              "name": "center_code",
+              "in": "path",
+              "required": true,
+              "description": "The center_code of the childcares",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Expected the childcare to a valid center_code",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "centre_code": "EB0014",
+                      "centre_name": "E-BRIDGE PRE-SCHOOL PTE LTD",
+                      "incidental_charges": "DEPOSIT",
+                      "frequency": "Ad-hoc",
+                      "amount": "1593.75"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a specific artwork detail",
+          "tags": [
+            "artworks"
+          ],
+          "parameters": [
+            {
+              "name": "center_code",
+              "in": "path",
+              "required": true,
+              "description": "The id of the childcare to update",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Updated fields for childcare",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "center_code": "EB0001",
+                    "center_name": "E-BRIDGE PRE-SCHOOL PTE. LTD."
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Expected response to a valid request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "example": {
+                      "center_code": "EB0001",
+                      "center_name": "updated name"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/resource2": {
+        "get": {
+          "summary": "List all resource2",
+          "tags": [
+            "resource2"
+          ],
+          "responses": {
+            "200": {
+              "description": "List of resource objects",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "example": {
+                        "id": 6,
+                        "special": "a different kind of resource"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

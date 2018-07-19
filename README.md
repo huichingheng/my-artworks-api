@@ -152,9 +152,15 @@ const signIn = async () => {
 
 ## SWAGGER - DOCUMATATION
 - npm install -g swagger-express
+- create the documentation in swagger editor
 
-## Deploy
-"seed": "node seederDataArtworks.js"
+
+## DEPLOY TO HEROKU
+- @ iterm, `heroku logs --tail` to see the progress while deploying to heroku, in order to spot the error and fix it. 
+- to deploy to heroku, change PORT to `process.env.PORT || 3000` cos Heroku is using its own PORT.
+- @ package.json, add "seed": "node seederDataArtworks.js" under "script".
+- @ iterm, run `heroku run npm run seed` so my local data will go to heroku database.
+
 
 
 ## ????
