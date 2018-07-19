@@ -4,6 +4,8 @@ const app = express();
 const index = require("./routers/index");
 const artworksRouter = require("./routers/artworks");
 const { passport } = require("./config/passport");
+const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
 
 const { handle404, handle500 } = require("./middleware/error_handlers.js");
 
@@ -31,14 +33,6 @@ app.use(
 
 // app.use("/artworks", artworksRouter);
 artworksRouter(app);
-
-// app.use(function(req, res, next) {
-//   res.status(404).json("Sorry can't find it");
-// });
-
-// app.use(function(err, req, res, next) {
-//   res.status(500).json("My Bad! Try again later.");
-// });
 
 app.use(handle404, handle500);
 

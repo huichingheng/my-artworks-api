@@ -144,9 +144,14 @@ const signIn = async () => {
 - after that, await signUp() and singIn() in the beforeAll.
 - now the put `.set("Authorization", adminBearerjwtToken)` to the test which need the authorization.
 
+## TO CHANGE /ARTWORK TO / 
+- copy and paste the signup and signin
+- 
+
 ## IF NEED TO ADD IN OTHER ROUTER
 
 ## SWAGGER - DOCUMATATION
+- npm install -g swagger
 
 
 ## ????

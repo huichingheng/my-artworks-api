@@ -8,7 +8,9 @@ const mongod = new MongoMemoryServer();
 const Artwork = require("../models/artwork");
 const express = require("express");
 const dummyApp = express();
+const index = require("../routers/index")
 
+dummyApp.use("/", index)
 artworksRouter(dummyApp);
 
 let adminBearerjwtToken;
@@ -16,16 +18,18 @@ let saveArtwork1;
 
 const signUp = async () => {
   let signUpResponse = await request(dummyApp)
-    .post("/artworks/signup")
+    .post("/signup")
     .send({
       username: "admin",
       password: "12345678"
     });
+
+  console.log(signUpResponse.error);
 };
 
 const signIn = async () => {
   let signInResponse = await request(dummyApp)
-    .post("/artworks/signin")
+    .post("/signin")
     .send({
       username: "admin",
       password: "12345678"
