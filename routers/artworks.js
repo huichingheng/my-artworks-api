@@ -78,7 +78,6 @@ artworksRouter.post(
     });
 
     const result = await newArtwork.save();
-    // console.log(result);
     res.status(201).json();
   }
 );

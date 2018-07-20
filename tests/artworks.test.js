@@ -1,6 +1,4 @@
 const request = require("supertest");
-// const app = require("../app");
-// let artworks = require("../seedData");
 const artworksRouter = require("../routers/artworks");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
