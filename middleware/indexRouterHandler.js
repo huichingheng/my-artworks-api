@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const { jwtOptions } = require("../config/passport");
+const {userIsValid} = require('../middleware/indexSignUpUtility')
 
 
 const landingPage = (req, res) => {
@@ -12,30 +13,36 @@ const signUp = async (req, res, next) => {
     const user = new User({ username, bio: "some bio" });
     user.setHashedPassword(password);
     try {
-      await user.save();
-      res.json({ user });
+        await user.save();
+        res.json({ user });
     } catch (err) {
-      next(err);
+        next(err);
     }
-  }
+}
 
 const signIn = async (req, res) => {
     const { username, password } = req.body;
-  
+
     const user = await User.findOne({ username });
-  
+
+    const userNotFound = () => {
+        res.status(401).json({ message: "no such user found" });
+    }
+
+    const userIsNotValid = () => {
+        res.status(401).json({ message: "passwords did not match" });
+    }
+
     if (!user) {
-      res.status(401).json({ message: "no such user found" });
+        userNotFound()
     }
-  
+
     if (user.validatePassword(password)) {
-      const userId = { id: user.id, anything: "whatever" };
-      const token = jwt.sign(userId, jwtOptions.secretOrKey);
-      res.json({ message: "ok", token: token });
+        userIsValid(user, jwt, jwtOptions, res)
     } else {
-      res.status(401).json({ message: "passwords did not match" });
+        userIsNotValid()
     }
-  }
+}
 
 module.exports = {
     landingPage,
