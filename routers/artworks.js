@@ -1,6 +1,5 @@
 const express = require("express");
 const artworksRouter = express.Router();
-const mongoose = require("mongoose");
 const Artwork = require("../models/artwork");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
@@ -19,7 +18,7 @@ artworksRouter.get("/", async (req, res, next) => {
 
     const filteredArtworks = artworks.filter(artwork => {
       const lowerCasedArtist = artwork.artist.toLowerCase();
-      return artwork.artist.includes(requestedArtist);
+      return lowerCasedArtist.includes(requestedArtist);
     });
     res.json(filteredArtworks);
   } else {
