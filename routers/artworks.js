@@ -76,7 +76,7 @@ artworksRouter.post(
       image_url: req.body.image_url
     });
 
-    const result = await newArtwork.save();
+    await newArtwork.save();
     res.status(201).json();
   }
 );
@@ -84,8 +84,8 @@ artworksRouter.post(
 artworksRouter.put(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  async (req, res, next) => {
-    const artwork = await Artwork.findByIdAndUpdate(req.params.id, req.body);
+  async (req, res) => {
+    await Artwork.findByIdAndUpdate(req.params.id, req.body);
     res.status(204).json();
   }
 );
@@ -93,8 +93,8 @@ artworksRouter.put(
 artworksRouter.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
-  async (req, res, next) => {
-    const artwork = await Artwork.findByIdAndDelete(req.params.id);
+  async (req, res) => {
+    await Artwork.findByIdAndDelete(req.params.id);
     res.status(204).json(`the artwork id-${req.params.id} is removed`);
   }
 );
