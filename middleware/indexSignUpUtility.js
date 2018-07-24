@@ -4,6 +4,16 @@ const userIsValid = (user, jwt, jwtOptions, res) => {
     res.json({ message: "ok", token: token });
 }
 
+const userNotFound = (res) => {
+    res.status(401).json({ message: "no such user found" });
+}
+
+const userIsNotValid = (res) => {
+    res.status(401).json({ message: "passwords did not match" });
+}
+
 module.exports = {
-    userIsValid
+    userIsValid,
+    userNotFound,
+    userIsNotValid
 }
