@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://blooming-cliffs-86757.herokuapp.com/"
+      "url": "https://my-artwork-api.herokuapp.com/"
     }
   ],
   "paths": {
